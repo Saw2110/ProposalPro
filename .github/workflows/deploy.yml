@@ -24,7 +24,7 @@ jobs:
       - name: Build web app
         run: flutter build web
       
-      - run: mkdir Payload
+      - run: Change Working Folder
         working-directory: build/web
         
       - name: Clean release branch
