@@ -32,6 +32,7 @@ jobs:
         run: |
           if ! git show-ref --verify --quiet refs/heads/release; then
           git branch release
+          fi
           
       - name: Set Git user identity
         run: |
