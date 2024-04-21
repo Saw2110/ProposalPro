@@ -24,7 +24,8 @@ jobs:
       - name: Build web app
         run: flutter build web
       
-      - run: Change Working Folder
+      - name: Changing Working Dir
+        run: mkdir Payload
         working-directory: build/web
         
       - name: Clean release branch
@@ -35,7 +36,6 @@ jobs:
         
       - name: Copy build files to release branch
         run: |
-          cp -r build/web/* .
           git add .
           git commit -m "Update release branch with new build"
           git push origin release
