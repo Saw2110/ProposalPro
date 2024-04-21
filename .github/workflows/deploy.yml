@@ -28,6 +28,12 @@ jobs:
         run: mkdir Payload
         working-directory: build/web
         
+      - name: Create Branch if not Exist
+        run: |
+          if ! git show-ref --verify --quiet refs/heads/release; then
+          git branch release
+          fi
+        
       - name: Clean release branch
         run: |
           git checkout release
