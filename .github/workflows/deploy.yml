@@ -46,6 +46,7 @@ jobs:
           git commit -m "Clean release branch"
         
       - name: Copy build files to release branch
+        working-directory: build/web/
         run: |
           git add .
           git commit -m "Update release branch with new build"
