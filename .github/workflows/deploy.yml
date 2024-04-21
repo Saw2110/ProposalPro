@@ -1,0 +1,39 @@
+name: Deploy Flutter Web App
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  build:
+    name: Build Flutter Web App
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+          
+      - name: Get dependencies
+        run: flutter pub get
+      
+      - name: Build web app
+        run: flutter build web
+        
+      - name: Clean release branch
+        run: |
+          git checkout release
+          git rm -r .
+          git commit -m "Clean release branch"
+        
+      - name: Copy build files to release branch
+        run: |
+          cp -r build/web/* .
+          git add .
+          git commit -m "Update release branch with new build"
+          git push origin release
