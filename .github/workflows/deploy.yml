@@ -50,5 +50,5 @@ jobs:
         run: |
           git add .
           git commit -m "Update release branch with new build"
-          git pull origin release
+          git pull --rebase origin release
           git push origin release
