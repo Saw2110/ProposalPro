@@ -39,9 +39,6 @@ jobs:
             git checkout release
             git rm -r .
             git commit -m "Deleted all files from branch"
-          else
-            git checkout -b release
-            git push origin release
           fi
         
       - name: Pull changes from remote release branch
