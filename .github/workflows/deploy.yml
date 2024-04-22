@@ -28,15 +28,9 @@ jobs:
         run: mkdir Payload
         working-directory: build/web
         
-      - name: Create Branch if not Exist
-        run: |
-          if git show-ref --verify --quiet refs/heads/release; then
-            git branch -D release  # Delete local release branch if it exists
-          fi
-          if ! git show-ref --verify --quiet refs/heads/release; then
-            git branch release  # Create release branch if it doesn't exist
-          fi
-
+      - name: Check if release branch exists
+        run: git ls-remote --exit-code --heads origin release || git branch release
+      
       - name: Set Git user identity
         run: |
           git config --global user.email "sabin.ghimire1827@gmail.com"
