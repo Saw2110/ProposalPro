@@ -44,10 +44,12 @@ jobs:
             git push origin release
           fi
         
+      - name: Pull changes from remote release branch
+        run: git pull origin release
+        
       - name: Copy build files to release branch
         working-directory: build/web/
         run: |
           git add -f .
           git commit -m "Update release branch with new build"
-          git pull origin release
           git push origin release
