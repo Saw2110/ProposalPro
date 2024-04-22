@@ -41,9 +41,6 @@ jobs:
             git commit -m "Deleted all files from branch"
           fi
         
-      - name: Pull changes from remote release branch
-        run: git pull origin release
-        
       - name: Copy build files to release branch
         working-directory: build/web/
         run: |
