@@ -47,7 +47,7 @@ jobs:
       - name: Copy build files to release branch
         working-directory: build/web/
         run: |
-          git add .
+          git add -f .
           git commit -m "Update release branch with new build"
           git pull origin release
           git push origin release
