@@ -17,36 +17,22 @@ jobs:
         with:
           channel: 'stable'
           architecture: x64
-          
+
+      - name: Enable Flutter Web
+        run: flutter config --enable-web
+
       - name: Get dependencies
         run: flutter pub get
       
       - name: Build web App
         run: flutter build web
-      
-      - name: Changing Working Dir
-        run: mkdir Payload
-        working-directory: build/web
-        
-      - name: Set Git user identity
-        run: |
-          git config --global user.email "sabin.ghimire1827@gmail.com"
-          git config --global user.name "Saw2110"
-  
-      - name: Clean release branch
-        run: |
-          if git show-ref --verify --quiet refs/heads/release; then
-            git checkout release
-            git rm -r .
-            git commit -m "Deleted all files from branch"
-          fi
-        
-      - name: Copy build files to release branch
-        working-directory: build/web/
-        run: |
-          git branch release
-          git checkout release
-          git add -f .
-          git commit -m "Update release branch with new build"
-          git pull origin release
-          git push origin release
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/web
+          force_orphan: true
+          user_name: 'github-ci[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Publish to gh-pages'
