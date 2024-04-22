@@ -28,9 +28,6 @@ jobs:
         run: mkdir Payload
         working-directory: build/web
         
-      - name: Check if release branch exists
-        run: git ls-remote --exit-code --heads origin release || git branch release
-      
       - name: Set Git user identity
         run: |
           git config --global user.email "sabin.ghimire1827@gmail.com"
@@ -38,9 +35,14 @@ jobs:
   
       - name: Clean release branch
         run: |
-          git checkout release
-          git rm -r .
-          git commit -m "Deleted all files from branch"
+          if git show-ref --verify --quiet refs/heads/release; then
+            git checkout release
+            git rm -r .
+            git commit -m "Deleted all files from branch"
+          else
+            git checkout -b release
+            git push origin release
+          fi
         
       - name: Copy build files to release branch
         working-directory: build/web/
