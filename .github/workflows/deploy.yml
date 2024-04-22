@@ -30,6 +30,7 @@ jobs:
         
       - name: Create Branch if not Exist
         run: |
+          git branch -d release
           if ! git show-ref --verify --quiet refs/heads/release; then
           git branch release
           fi
@@ -50,5 +51,4 @@ jobs:
         run: |
           git add .
           git commit -m "Update release branch with new build"
-          git pull --rebase origin release
           git push origin release
